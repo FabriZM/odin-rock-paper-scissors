@@ -1,114 +1,123 @@
-let humanScore = 0;
-let computerScore = 0;
+let humanScore = 5;
+let computerScore = 5;
 
-let infoText = document.querySelector(".result");
-infoText.textContent = 'ROCK BEATS SCISSORS!'
+const whoWins = document.querySelector(".victory");
+const infoText = document.querySelector(".result");
+infoText.textContent = 'ROCK BEATS SCISSORS!';
 
-let playerPlay = document.querySelector("#playerBt")
-playerPlay.textContent = '🪨';
-let cpuPlay = document.querySelector("#cpuBt")
-cpuPlay.textContent = '✂️';
+const humanSel = document.querySelector("#playerBt");
+const cpuSel = document.querySelector("#cpuBt");
+
+const cpuLives = document.querySelector("#cpu-lives");
+const humanLives = document.querySelector("#player-lives");
+
+
+const playRound = (humanPlay) => {
+
+    let cpu = getComputerChoice();
+    humanSel.textContent = getEmoji(humanPlay);
+    cpuSel.textContent = getEmoji(cpu);
+    // Check who wins
+    whoWins.textContent = checkWinner(cpu, humanPlay);
+    if (humanScore === 0) {
+        whoWins.textContent = 'GAME OVER :C';
+        confirm(resetScores());
+
+    } else if (computerScore === 0) {
+        whoWins.textContent = 'VICTORY!';
+        confirm(resetScores());
+    }
+
+}
 
 function getComputerChoice() {
     let play = Math.floor(Math.random() * 3 + 1);
     return play;
 }
 
-function getHumanChoice() {
-    let play = prompt('1.Rock 2.Paper 3.Scissors!', '');
-
-    if (parseInt(play) <= 3 || parseInt(play) > 0) {
-        output = parseInt(play)
-    } else {
-        switch (play.toLowerCase()) {
-            case 'rock':
-                output = 1;
-                break;
-
-            case 'paper':
-                output = 2;
-                break;
-
-            case 'scissors':
-                output = 3;
-                break;
-
-            default:
-                alert('Wrong input. Choose between Rock, Paper, Scissors.');
-                output = getHumanChoice();
-                break;
-        }
-    }
-
-    return output;
-}
-
-function getPlayName(play) {
-    let output;
+function getName(play) {
     switch (play) {
         case 1:
-            output = 'Rock';
-            break;
+            return 'Rock';
 
         case 2:
-            output = 'Paper';
-            break;
+            return 'Paper';
 
-        default:
-            output = 'Scissors';
-            break;
+        case 3:
+            return 'Scissors';
     }
-    return output;
+}
+
+function getEmoji(play) {
+    switch (play) {
+        case 1:
+            return '🪨';
+
+        case 2:
+            return '🧻';
+
+        case 3:
+            return '✂️';
+    }
 }
 
 function checkWinner(cpu, player) {
-    let result = cpu - player;
     // CPU win cases (3-2, 2-1, 1-3)@{1,-2} ; Player win cases (2-3, 1-2, 3-1)@{-1,2} ; tie {0}
-    switch (result) {
+    switch (cpu - player) {
         case 0:
             return 'Tie!'
 
         case -2:
         case 1:
-            computerScore++;
+            --humanScore;
+            updateScore(humanScore, humanLives);
             return 'Point for CPU! ';
 
         default:
-            humanScore++;
+            --computerScore;
+            updateScore(computerScore, cpuLives);
             return 'Point for Player! ';
     }
 }
 
-function playGame() {
-    for (let i = 0; i < 5; i++) {
-        playRound(i);
+const updateScore = (score, selector) => {
+    let lives;
+    switch (score) {
+        case 5:
+            lives = '●●●●●';
+            break;
+        case 4:
+            lives = '●●●●○';
+            break;
+        case 3:
+            lives = '●●●○○';
+            break;
+        case 2:
+            lives = '●●○○○';
+            break;
+        case 1:
+            lives = '●○○○○';
+            break;
+        case 0:
+            lives = '○○○○○';
+            break;
     }
-
-    while (humanScore < 5 || computerScore < 5) {
-        playRound(i);
-    }
-
-    if (humanScore > computerScore) {
-        alert('YOU WIN! :D');
-    } else if (computerScore > humanScore) {
-        alert('You lost :c');
-    } else {
-        alert('The game ended in a draw! :I')
-    }
-
-    resetScores();
+    selector.textContent = lives;
 }
 
 const resetScores = () => {
-    humanScore = 0;
-    computerScore = 0;
+    humanScore = 5;
+    computerScore = 5;
+    updateScore(humanScore, humanLives);
+    updateScore(computerScore, cpuLives);
 }
 
-const playRound = (i) => {
-    let player = getHumanChoice();
-    let cpu = getComputerChoice();
-    alert(`Round ${i + 1} | Computer chose ${getPlayName(cpu)}! ; Player chose ${getPlayName(player)}!`);
-    // Check who wins
-    console.log(checkWinner(cpu, player));
-    alert(`Player: ${humanScore} | CPU: ${computerScore}`);
-}
+document.getElementById("rock").onclick = function () {
+    playRound(1);
+};
+document.getElementById("paper").onclick = function () {
+    playRound(2);
+};
+document.getElementById("scissors").onclick = function () {
+    playRound(3);
+};

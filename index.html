@@ -11,13 +11,14 @@
 <body>
     <h1>ROCK PAPER SCISSORS</h1>
     <div class="score">
-        <div class="player-lives">
+        <div class="player-healt">
             <p>PLAYER</p>
-            <p class="lives">●●●●●</p> <!-- ●○ -->
+            <p class="lives" id="player-lives">●●●●●</p> <!-- ●○ -->
         </div>
-        <div class="cpu-lives">
+        <p class="victory">START</p>
+        <div class="cpu-health">
             <p>CPU</p>
-            <p class="lives">●●●●●</p> <!-- ●○ -->
+            <p class="lives" id="cpu-lives">●●●●●</p> <!-- ●○ -->
         </div>
     </div>
 
@@ -29,9 +30,9 @@
     <p class="result"></p>
 
     <div class="options">
-        <button class="rock">🪨</button>
-        <button class="paper">🧻</button>
-        <button class="scissors">✂️</button>
+        <button id="rock">🪨</button>
+        <button id="paper">🧻</button>
+        <button id="scissors">✂️</button>
     </div>
 
     <script src="./js/javascript.js"></script>

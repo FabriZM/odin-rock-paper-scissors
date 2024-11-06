@@ -29,8 +29,16 @@ h1 {
     justify-content: space-between;
 }
 
-.cpu-lives {
+.cpu-health {
     text-align: end;
+}
+
+#cpu-lives {
+    -moz-transform: scale(-1, 1);
+    -webkit-transform: scale(-1, 1);
+    -o-transform: scale(-1, 1);
+    -ms-transform: scale(-1, 1);
+    transform: scale(-1, 1);
 }
 
 .lives {
@@ -50,11 +58,12 @@ button {
     border-radius: 15px;
     font-size: 62px;
     background-color: #272727;
-    box-shadow: rgba(0,0,0,0.2) 5px 5px 15px;
+    box-shadow: rgba(0, 0, 0, 0.2) 5px 5px 15px;
 }
 
 .option:hover {
     background-color: lavender;
+    cursor: pointer;
 }
 
 .result {

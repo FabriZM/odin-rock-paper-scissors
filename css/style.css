@@ -38,7 +38,7 @@ h1 {
     font-size: 48px;
 }
 
-.options {
+.boxes {
     display: flex;
     gap: 72px;
 }
@@ -51,6 +51,10 @@ button {
     font-size: 62px;
     background-color: #272727;
     box-shadow: rgba(0,0,0,0.2) 5px 5px 15px;
+}
+
+.option:hover {
+    background-color: lavender;
 }
 
 .result {

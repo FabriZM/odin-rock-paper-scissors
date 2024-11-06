@@ -1,9 +1,12 @@
 let humanScore = 5;
 let computerScore = 5;
+let cpuPlay;
+let humanPlay;
+
 
 const whoWins = document.querySelector(".victory");
-const infoText = document.querySelector(".result");
-infoText.textContent = 'ROCK BEATS SCISSORS!';
+const feed = document.querySelector(".feed");
+feed.textContent = 'CHOOSE YOUR WEAPON!';
 
 const humanSel = document.querySelector("#playerBox");
 const cpuSel = document.querySelector("#cpuBox");
@@ -11,13 +14,15 @@ const cpuSel = document.querySelector("#cpuBox");
 const cpuLives = document.querySelector("#cpu-lives");
 const humanLives = document.querySelector("#player-lives");
 
-const playRound = (humanPlay) => {
+const playRound = (player) => {
 
     let cpu = getComputerChoice();
-    humanSel.textContent = getEmoji(humanPlay);
+    cpuPlay = getName(cpuPlay);
+    humanPlay = getName(player);
+    humanSel.textContent = getEmoji(player);
     cpuSel.textContent = getEmoji(cpu);
     // Check who wins
-    whoWins.textContent = checkWinner(cpu, humanPlay);
+    whoWins.textContent = checkWinner(cpu, player);
     if (humanScore === 0) {
         whoWins.textContent = 'GAME OVER :C';
         gameOverSound();
@@ -29,20 +34,20 @@ const playRound = (humanPlay) => {
 }
 
 function getComputerChoice() {
-    let play = Math.floor(Math.random() * 3 + 1);
-    return play;
+    cpuPlay = Math.floor(Math.random() * 3 + 1);
+    return cpuPlay;
 }
 
 function getName(play) {
     switch (play) {
         case 1:
-            return 'Rock';
+            return 'ROCK';
 
         case 2:
-            return 'Paper';
+            return 'PAPER';
 
         case 3:
-            return 'Scissors';
+            return 'SCISSORS';
     }
 }
 
@@ -63,23 +68,26 @@ function checkWinner(cpu, player) {
     // CPU win cases (3-2, 2-1, 1-3)@{1,-2} ; Player win cases (2-3, 1-2, 3-1)@{-1,2} ; tie {0}
     switch (cpu - player) {
         case 0:
-            humanSel.style = "background-color: #f2e7ab"
-            cpuSel.style = "background-color: #f2e7ab"
-            return 'Tie!'
+            humanSel.style = "background-color: #f2e7ab";
+            cpuSel.style = "background-color: #f2e7ab";
+            feed.textContent = `${humanPlay} TIES ${cpuPlay}`
+            return 'Tie!';
 
         case -2:
         case 1:
             --humanScore;
             updateScore(humanScore, humanLives);
-            humanSel.style = "background-color: #ce7777"
-            cpuSel.style = "background-color: #77ceab"
+            humanSel.style = "background-color: #ce7777";
+            cpuSel.style = "background-color: #77ceab";
+            feed.textContent = `${humanPlay} LOSES AGAINST ${cpuPlay}`
             return 'Point for CPU! ';
 
         default:
             --computerScore;
             updateScore(computerScore, cpuLives);
-            humanSel.style = "background-color: #77ceab"
-            cpuSel.style = "background-color: #ce7777"
+            humanSel.style = "background-color: #77ceab";
+            cpuSel.style = "background-color: #ce7777";
+            feed.textContent = `${humanPlay} BEATS ${cpuPlay}`
             return 'Point for Player! ';
     }
 }

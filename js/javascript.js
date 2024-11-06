@@ -21,11 +21,8 @@ const playRound = (humanPlay) => {
     whoWins.textContent = checkWinner(cpu, humanPlay);
     if (humanScore === 0) {
         whoWins.textContent = 'GAME OVER :C';
-        confirm(resetScores());
-
     } else if (computerScore === 0) {
         whoWins.textContent = 'VICTORY!';
-        confirm(resetScores());
     }
 
 }
@@ -106,18 +103,23 @@ const updateScore = (score, selector) => {
 }
 
 const resetScores = () => {
+    if (humanScore === 0 || computerScore === 0 ) {
     humanScore = 5;
     computerScore = 5;
     updateScore(humanScore, humanLives);
     updateScore(computerScore, cpuLives);
+    }
 }
 
 document.getElementById("rock").onclick = function () {
+    resetScores();
     playRound(1);
 };
 document.getElementById("paper").onclick = function () {
+    resetScores();
     playRound(2);
 };
 document.getElementById("scissors").onclick = function () {
+    resetScores();
     playRound(3);
 };

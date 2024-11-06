@@ -1,14 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
     <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
-    
+    <h1>ROCK PAPER SCISSORS</h1>
+    <div class="score">
+        <div class="player-lives">
+            <p>PLAYER</p>
+            <p class="lives">●●●●●</p> <!-- ●○ -->
+        </div>
+        <div class="cpu-lives">
+            <p>CPU</p>
+            <p class="lives">●●●●●</p> <!-- ●○ -->
+        </div>
+    </div>
+
+    <div class="options">
+        <button id="playerBt"></button>
+        <button id="cpuBt"></button>
+    </div>
+
+    <p class="result"></p>
+
+    <div class="options">
+        <button class="rock">🪨</button>
+        <button class="paper">🧻</button>
+        <button class="scissors">✂️</button>
+    </div>
 
     <script src="./js/javascript.js"></script>
 </body>
+
 </html>

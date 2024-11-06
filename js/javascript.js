@@ -1,6 +1,14 @@
 let humanScore = 0;
 let computerScore = 0;
 
+let infoText = document.querySelector(".result");
+infoText.textContent = 'ROCK BEATS SCISSORS!'
+
+let playerPlay = document.querySelector("#playerBt")
+playerPlay.textContent = '🪨';
+let cpuPlay = document.querySelector("#cpuBt")
+cpuPlay.textContent = '✂️';
+
 function getComputerChoice() {
     let play = Math.floor(Math.random() * 3 + 1);
     return play;
@@ -75,6 +83,11 @@ function playGame() {
     for (let i = 0; i < 5; i++) {
         playRound(i);
     }
+
+    while (humanScore < 5 || computerScore < 5) {
+        playRound(i);
+    }
+
     if (humanScore > computerScore) {
         alert('YOU WIN! :D');
     } else if (computerScore > humanScore) {

@@ -14,6 +14,8 @@ const cpuSel = document.querySelector("#cpuBox");
 const cpuLives = document.querySelector("#cpu-lives");
 const humanLives = document.querySelector("#player-lives");
 
+const restart = document.querySelector("#restart")
+
 const playRound = (player) => {
 
     let cpu = getComputerChoice();
@@ -26,9 +28,11 @@ const playRound = (player) => {
     if (humanScore === 0) {
         whoWins.textContent = 'GAME OVER :C';
         gameOverSound();
+        restart.style = "display: block"
     } else if (computerScore === 0) {
-        whoWins.textContent = 'VICTORY!';
+        whoWins.textContent = 'YOU WON!';
         victorySound();
+        restart.style = "display: block"
     }
 
 }
@@ -128,17 +132,27 @@ const resetScores = () => {
     }
 }
 
-document.getElementById("rock").onclick = function () {
+function startGame(num) {
     resetScores();
-    playRound(1);
-};
-document.getElementById("paper").onclick = function () {
+    restart.style = "display: none"
+    playRound(num);
+}
+
+document.getElementById("rock").onclick = function (){startGame(1)};
+document.getElementById("paper").onclick = function (){startGame(2)};
+document.getElementById("scissors").onclick = function (){startGame(3)};
+
+document.getElementById("restart").onclick = function () {
     resetScores();
-    playRound(2);
-};
-document.getElementById("scissors").onclick = function () {
-    resetScores();
-    playRound(3);
+    feed.textContent = 'CHOOSE YOUR WEAPON!';
+    whoWins.textContent = "START";
+    restart.style = "display: none"
+    
+    cpuSel.textContent = '';
+    cpuSel.style = "background-color: #272727";
+
+    humanSel.textContent = '';
+    humanSel.style = "background-color: #272727";
 };
 
 function PlaySound(sound) {
@@ -155,3 +169,4 @@ function gameOverSound() {
     const gameOver = new Audio('./sounds/disable-sound.mp3');
     gameOver.play();
 }
+

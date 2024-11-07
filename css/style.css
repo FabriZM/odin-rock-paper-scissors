@@ -57,6 +57,11 @@ h1 {
     gap: 72px;
 }
 
+#cpuBox {
+    color: white;
+    font-family: "Sigmar One", sans-serif;
+}
+
 button {
     border-style: none;
     width: 180px;

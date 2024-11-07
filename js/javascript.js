@@ -122,7 +122,7 @@ function checkWinner(cpu, player) {
             humanBox.style = "background-color: #77ceab";
             cpuBox.style = "background-color: #ce7777";
             feed.textContent = `${humanPlay} BEATS ${cpuPlay}`
-            anySound('boop.mp3');
+            anySound('correct.mp3');
             return 'Point for Player! ';
     }
 }

@@ -12,6 +12,9 @@ const roundCountdown = (player) => {
     anySound('timer.mp3');
     cpuBox.textContent = countdown;
     upperText.textContent = '👀';
+    if (humanScore == 1 || computerScore == 1) {
+        upperText.style = "scale: 3";
+    }
 
     countdownInterval = setInterval(() => {
         countdown--;
@@ -46,6 +49,7 @@ const playRound = (player) => {
     humanPlay = getName(player);
     cpuBox.textContent = getEmoji(cpu);
     // Check who wins
+    upperText.style = "scale: 1"
     upperText.textContent = checkWinner(cpu, player);
     if (humanScore === 0) {
         upperText.textContent = 'GAME OVER :C';

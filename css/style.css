@@ -35,6 +35,10 @@ h1 {
     align-self: center;
 }
 
+.upperText {
+    font-size: 32px;
+}
+
 .cpu-health {
     text-align: end;
 }

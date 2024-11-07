@@ -12,6 +12,9 @@ const roundCountdown = (player) => {
     anySound('timer.mp3');
     cpuBox.textContent = countdown;
     upperText.textContent = '👀';
+    if (humanScore == 1 && computerScore ==1) {
+        upperText.textContent = '🙈';
+    }
     if (humanScore == 1 || computerScore == 1) {
         upperText.style = "scale: 3";
     }
@@ -28,7 +31,7 @@ const roundCountdown = (player) => {
     }, 800);
 }
 
-const upperText = document.querySelector(".victory");
+const upperText = document.querySelector(".upperText");
 const feed = document.querySelector(".feed");
 feed.textContent = 'CHOOSE YOUR WEAPON!';
 
@@ -50,19 +53,26 @@ const playRound = (player) => {
     cpuBox.textContent = getEmoji(cpu);
     // Check who wins
     upperText.style = "scale: 1"
-    upperText.textContent = checkWinner(cpu, player);
+    upperText.textContent = checkRoundWinner(cpu, player);
+    
+    checkGameWinner()
+
+    buttons.forEach( button => {
+        button.disabled = false;
+    })
+
+}
+
+function checkGameWinner() {
     if (humanScore === 0) {
         upperText.textContent = 'GAME OVER :C';
         gameOverSound();
         restart.style = "display: block"
     } else if (computerScore === 0) {
-        upperText.textContent = 'YOU WON!';
+        upperText.textContent = 'VICTORY!';
         victorySound();
         restart.style = "display: block"
     }
-    buttons.forEach( button => {
-        button.disabled = false;
-    })
 }
 
 function getComputerChoice() {
@@ -96,7 +106,7 @@ function getEmoji(play) {
     }
 }
 
-function checkWinner(cpu, player) {
+function checkRoundWinner(cpu, player) {
     // CPU win cases (3-2, 2-1, 1-3)@{1,-2} ; Player win cases (2-3, 1-2, 3-1)@{-1,2} ; tie {0}
     switch (cpu - player) {
         case 0:
@@ -114,7 +124,7 @@ function checkWinner(cpu, player) {
             cpuBox.style = "background-color: #77ceab";
             feed.textContent = `${humanPlay} LOSES AGAINST ${cpuPlay}`
             anySound('wrong.mp3');
-            return 'Point for CPU! ';
+            return 'YOU LOST! ';
 
         default:
             --computerScore;
@@ -123,7 +133,7 @@ function checkWinner(cpu, player) {
             cpuBox.style = "background-color: #ce7777";
             feed.textContent = `${humanPlay} BEATS ${cpuPlay}`
             anySound('correct.mp3');
-            return 'Point for Player! ';
+            return 'YOU WON! ';
     }
 }
 

@@ -12,6 +12,23 @@ const playerLives = document.querySelector("#player-lives");
 const buttons = document.querySelectorAll(".option");
 const restart = document.querySelector("#restart");
 
+document.getElementById("rock").onclick = function () { startGame(1) };
+document.getElementById("paper").onclick = function () { startGame(2) };
+document.getElementById("scissors").onclick = function () { startGame(3) };
+
+function startGame(player) {
+    buttons.forEach(button => {
+        button.disabled = true;
+    })
+    clearBoxes();
+    restart.style = "display: none";
+    if (playerScore === 0 || computerScore === 0) {
+        resetScores();
+    }
+    playerBox.textContent = getEmoji(player);
+    roundCountdown(player);
+}
+
 const roundCountdown = (player) => {
     let countdown = 3;
     let countdownInterval;
@@ -39,30 +56,13 @@ const roundCountdown = (player) => {
     }, 800);
 }
 
-document.getElementById("rock").onclick = function () { startGame(1) };
-document.getElementById("paper").onclick = function () { startGame(2) };
-document.getElementById("scissors").onclick = function () { startGame(3) };
-
-function startGame(player) {
-    buttons.forEach(button => {
-        button.disabled = true;
-    })
-    clearBoxes();
-    playerBox.textContent = getEmoji(player);
-    roundCountdown(player);
-    if (playerScore === 0 || computerScore === 0) {
-        resetScores();
-    }
-    restart.style = "display: none"
-}
-
 const playRound = (player) => {
     let cpuNum = getComputerChoice();
     cpuPlay = getName(cpuPlay);
     playerPlay = getName(player);
     cpuBox.textContent = getEmoji(cpuNum);
     // Check who wins
-    upperText.style = "scale: 1"
+    upperText.style = "scale: 1" 
     upperText.textContent = checkRoundWinner(cpuNum, player);
     checkGameWinner()
     buttons.forEach(button => {
@@ -172,14 +172,13 @@ const updateScore = (score, selector) => {
 }
 
 document.getElementById("restart").onclick = function () {
-    resetScores();
     playSound('rising-pops.mp3');
+    resetScores();
+    clearBoxes();
     feed.textContent = 'CHOOSE YOUR WEAPON!';
     upperText.textContent = "START";
     restart.style = "display: none"
-    clearBoxes();
 };
-
 
 const resetScores = () => {
     playerScore = 5;
@@ -196,8 +195,9 @@ function clearBoxes() {
     playerBox.style = "background-color: #272727";
 }
 
-function playSound(filename) {
+function playSound(filename, volume = 1) {
     const playSound = new Audio(`./sounds/${filename}`);
-    playSound.play();
+    playSound.volume = volume;
+    playSound.cloneNode(true).play();
 }
 

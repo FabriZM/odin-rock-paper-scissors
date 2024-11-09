@@ -1,21 +1,22 @@
-let humanScore = 5;
+let playerScore = 5;
 let computerScore = 5;
 let cpuPlay;
-let humanPlay;
+let playerPlay;
 
 
 
-const roundCountdown = (player) => {
+const roundCountdown = (player) => { 
     let countdown = 3;
     let countdownInterval;
     clearInterval(countdownInterval);
     anySound('timer.mp3');
     cpuBox.textContent = countdown;
     upperText.textContent = '👀';
-    if (humanScore == 1 && computerScore ==1) {
+
+    if (playerScore == 1 && computerScore == 1) {
         upperText.textContent = '🙈';
     }
-    if (humanScore == 1 || computerScore == 1) {
+    if (playerScore == 1 || computerScore == 1) {
         upperText.style = "scale: 3";
     }
 
@@ -33,38 +34,31 @@ const roundCountdown = (player) => {
 
 const upperText = document.querySelector(".upperText");
 const feed = document.querySelector(".feed");
-feed.textContent = 'CHOOSE YOUR WEAPON!';
-
-const humanBox = document.querySelector("#playerBox");
+const playerBox = document.querySelector("#playerBox");
 const cpuBox = document.querySelector("#cpuBox");
-
 const cpuLives = document.querySelector("#cpu-lives");
-const humanLives = document.querySelector("#player-lives");
-
+const playerLives = document.querySelector("#player-lives");
 const buttons = document.querySelectorAll(".option");
-
 const restart = document.querySelector("#restart");
 
 const playRound = (player) => {
-
-    let cpu = getComputerChoice();
+    let cpuNum = getComputerChoice();
     cpuPlay = getName(cpuPlay);
-    humanPlay = getName(player);
-    cpuBox.textContent = getEmoji(cpu);
+    playerPlay = getName(player);
+    cpuBox.textContent = getEmoji(cpuNum);
     // Check who wins
     upperText.style = "scale: 1"
-    upperText.textContent = checkRoundWinner(cpu, player);
-    
+    upperText.textContent = checkRoundWinner(cpuNum, player);
+
     checkGameWinner()
 
-    buttons.forEach( button => {
+    buttons.forEach(button => {
         button.disabled = false;
     })
-
 }
 
 function checkGameWinner() {
-    if (humanScore === 0) {
+    if (playerScore === 0) {
         upperText.textContent = 'GAME OVER :C';
         gameOverSound();
         restart.style = "display: block"
@@ -110,28 +104,28 @@ function checkRoundWinner(cpu, player) {
     // CPU win cases (3-2, 2-1, 1-3)@{1,-2} ; Player win cases (2-3, 1-2, 3-1)@{-1,2} ; tie {0}
     switch (cpu - player) {
         case 0:
-            humanBox.style = "background-color: #f2e7ab";
+            playerBox.style = "background-color: #f2e7ab";
             cpuBox.style = "background-color: #f2e7ab";
-            feed.textContent = `${humanPlay} TIES ${cpuPlay}`
+            feed.textContent = `${playerPlay} TIES ${cpuPlay}`
             anySound('glug-a.mp3');
             return 'Tie!';
 
         case -2:
         case 1:
-            --humanScore;
-            updateScore(humanScore, humanLives);
-            humanBox.style = "background-color: #ce7777";
+            --playerScore;
+            updateScore(playerScore, playerLives);
+            playerBox.style = "background-color: #ce7777";
             cpuBox.style = "background-color: #77ceab";
-            feed.textContent = `${humanPlay} LOSES AGAINST ${cpuPlay}`
+            feed.textContent = `${playerPlay} LOSES AGAINST ${cpuPlay}`
             anySound('wrong.mp3');
             return 'YOU LOST! ';
 
         default:
             --computerScore;
             updateScore(computerScore, cpuLives);
-            humanBox.style = "background-color: #77ceab";
+            playerBox.style = "background-color: #77ceab";
             cpuBox.style = "background-color: #ce7777";
-            feed.textContent = `${humanPlay} BEATS ${cpuPlay}`
+            feed.textContent = `${playerPlay} BEATS ${cpuPlay}`
             anySound('correct.mp3');
             return 'YOU WON! ';
     }
@@ -165,20 +159,20 @@ const updateScore = (score, selector) => {
 }
 
 const resetScores = () => {
-    if (humanScore === 0 || computerScore === 0) {
-        humanScore = 5;
+    if (playerScore === 0 || computerScore === 0) {
+        playerScore = 5;
         computerScore = 5;
-        updateScore(humanScore, humanLives);
+        updateScore(playerScore, playerLives);
         updateScore(computerScore, cpuLives);
     }
 }
 
 function startGame(player) {
-    buttons.forEach( button => {
+    buttons.forEach(button => {
         button.disabled = true;
     })
     clearBoxes();
-    humanBox.textContent = getEmoji(player);
+    playerBox.textContent = getEmoji(player);
     roundCountdown(player);
     resetScores();
     restart.style = "display: none"
@@ -201,13 +195,8 @@ function clearBoxes() {
     cpuBox.textContent = '';
     cpuBox.style = "background-color: #272727";
 
-    humanBox.textContent = '';
-    humanBox.style = "background-color: #272727";
-}
-
-function playSound(sound) {
-    let popSound = document.getElementById(sound);
-    popSound.cloneNode(true).play();
+    playerBox.textContent = '';
+    playerBox.style = "background-color: #272727";
 }
 
 function victorySound() {
@@ -220,7 +209,7 @@ function gameOverSound() {
     gameOver.play();
 }
 
-function anySound(filename) {
+function playSound(filename) {
     const anySound = new Audio(`./sounds/${filename}`);
     anySound.play();
 }

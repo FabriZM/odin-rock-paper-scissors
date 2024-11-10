@@ -12,9 +12,11 @@ const playerLives = document.querySelector("#player-lives");
 const buttons = document.querySelectorAll(".option");
 const restart = document.querySelector("#restart");
 
-document.getElementById("rock").onclick = function () { startGame(1) };
-document.getElementById("paper").onclick = function () { startGame(2) };
-document.getElementById("scissors").onclick = function () { startGame(3) };
+buttons.forEach(button => {
+    button.addEventListener("click", (event) => {
+        startGame(parseInt(event.target.id))
+    });
+})
 
 function startGame(player) {
     buttons.forEach(button => {

@@ -196,8 +196,8 @@ function clearBoxes() {
 }
 
 function playSound(filename, volume = 1) {
-    const playSound = new Audio(`./sounds/${filename}`);
-    playSound.volume = volume;
-    playSound.cloneNode(true).play();
+    const sound = new Audio(`./sounds/${filename}`);
+    sound.volume = volume;
+    sound.play();
 }
 

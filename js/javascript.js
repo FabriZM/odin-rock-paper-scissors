@@ -13,8 +13,12 @@ const buttons = document.querySelectorAll(".option");
 const restart = document.querySelector("#restart");
 
 buttons.forEach(button => {
+    button.addEventListener("mouseenter", () => {
+        playSound('blop.mp3', 0.1);
+    });
     button.addEventListener("click", (event) => {
-        startGame(parseInt(event.target.id))
+        playSound('pop.mp3');
+        startGame(parseInt(event.target.id));
     });
 })
 
@@ -202,4 +206,5 @@ function playSound(filename, volume = 1) {
     sound.volume = volume;
     sound.play();
 }
+
 
